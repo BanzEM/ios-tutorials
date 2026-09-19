@@ -25,22 +25,26 @@ struct ContentView: View {
             
             HStack{
                 
-                Button("Remove Die") {
+                Button("Remove Die", systemImage: "minus.circle.fill") {
                     withAnimation{
                         numberOfDice -= 1
                     }
                 }
                 .disabled(numberOfDice == 1)
                 
-                Button("Add Die") {
+                Button("Add Die", systemImage: "plus.circle.fill") {
                     withAnimation{
                         numberOfDice += 1
                     }
                 }
                 .disabled(numberOfDice == 5)
             }
+            .padding()
+            .labelStyle(.iconOnly)
+            .font(.title)
         }
         .padding()
+       
     }
 }
 
