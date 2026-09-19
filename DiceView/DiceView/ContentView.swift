@@ -8,12 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var numberOfDice: Int = 1
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            
+            Text("Dice Roller")
+                .font(.largeTitle.lowercaseSmallCaps())
+            
+            HStack {
+                ForEach(1...numberOfDice, id: \.description) { _ in
+                    DiceView()
+                }
+            }
+            
+            HStack{
+                
+                Button("Remove Die") {
+                    withAnimation{
+                        numberOfDice -= 1
+                    }
+                }
+                .disabled(numberOfDice == 1)
+                
+                Button("Add Die") {
+                    withAnimation{
+                        numberOfDice += 1
+                    }
+                }
+                .disabled(numberOfDice == 3)
+            }
         }
         .padding()
     }
