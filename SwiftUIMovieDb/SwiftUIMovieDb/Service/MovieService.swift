@@ -8,9 +8,9 @@
 import Foundation
 
 protocol MovieService {
-    func fetchMovies(from endpoint: MovieListEndpoint, completion: @escaping (Result<[MovieResponse], MovieError>) -> ())
-    func fetchMovieDetails(for movieId: Int, completion: @escaping (Result<Movie, MovieError>) -> ())
-    func searchMovie(for query: String, completion: @escaping (Result<[MovieResponse], MovieError>) -> ())
+    func fetchMovies(from endpoint: MovieListEndpoint, completion: @escaping (Result<MovieResponse, MovieError>) -> ())
+    func fetchMovie(id: Int, completion: @escaping (Result<Movie, MovieError>) -> ())
+    func searchMovie(for query: String, completion: @escaping (Result<MovieResponse, MovieError>) -> ())
     
 }
 

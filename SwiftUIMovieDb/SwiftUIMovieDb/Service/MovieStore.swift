@@ -15,9 +15,10 @@ class MovieStore: MovieService {
     private let apiKey = "ApiKiey"
     private let baseURL: String = "https://api.themoviedb.org/3"
     private let urlSession = URLSession.shared
+    private let jsonDecoder = Utils.jsonDecoder
     
     func fetchMovies(from endpoint: MovieListEndpoint, completion: @escaping (Result<MovieResponse, MovieError>) ->()){
-        guard let url = URL(string: "\(baseURL)/moie/\(endpoint.rawValue)") else {
+        guard let url = URL(string: "\(baseURL)/movie/\(endpoint.rawValue)") else {
             completion(.failure(.invalidEndpoint))
             return
         }
@@ -34,7 +35,7 @@ class MovieStore: MovieService {
         ], completion: completion)
     }
     
-    func searchMovie(for query: String, completion: @escaping (Result<[MovieResponse], MovieError>) -> ()) {
+    func searchMovie(for query: String, completion: @escaping (Result<MovieResponse, MovieError>) -> ()) {
         guard let url = URL(string: "\(baseURL)/search/movie") else {
             completion(.failure(.invalidEndpoint))
             return
@@ -82,6 +83,7 @@ class MovieStore: MovieService {
             
             guard let data = data else {
                 self.executeCompletionHandlerInMainThreat(with: .failure(.noData), completion: completion)
+                return
             }
             
             do{
