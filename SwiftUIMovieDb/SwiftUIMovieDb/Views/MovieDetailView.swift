@@ -50,6 +50,53 @@ struct MovieDetailListView: View {
                 Text(movie.scoreText)
             }
             Divider()
+            
+            HStack(alignment: .top, spacing: 4){
+                if movie.cast != nil && movie.cast!.count > 0{
+                    VStack(alignment: .leading, spacing: 4){
+                        Text("Starring").font(.headline)
+                        ForEach(self.movie.cast!.prefix(9)){ cast in
+                            Text(cast.name)
+                        }
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                }
+                if movie.crew != nil && movie.crew!.count > 0{
+                    VStack(alignment: .leading, spacing: 4){
+                        if movie.directors != nil &&
+                        movie.directors!.count > 0 {
+                            Text("Director(s)")
+                            ForEach(self.movie.directors!.prefix(2)){
+                                crew in
+                                Text(crew.name)
+                            }
+                        }
+                        
+                        if movie.producers != nil &&
+                        movie.producers!.count > 0 {
+                            Text("Producer(s)")
+                                .padding(.top)
+                            ForEach(self.movie.producers!.prefix(2)){
+                                crew in
+                                Text(crew.name)
+                            }
+                        }
+                        
+                        if movie.screenwriters != nil &&
+                        movie.screenwriters!.count > 0 {
+                            Text("Screenwriter(s)")
+                                .padding(.top)
+                            ForEach(self.movie.screenwriters!.prefix(2)){
+                                crew in
+                                Text(crew.name)
+                            }
+                        }
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            Divider()
         }
     }
 }
