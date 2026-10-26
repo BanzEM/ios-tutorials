@@ -57,7 +57,7 @@ class MovieStore: MovieService {
             return
         }
         
-        var queryItems = [URLQueryItem(name: "api_key", value: "ApiKiey")]
+        var queryItems = [URLQueryItem(name: "api_key", value: "\(apiKey)")]
         if let params = params {
             queryItems.append(contentsOf: params.map{URLQueryItem(name: $0.key, value: $0.value)})
         }
@@ -87,7 +87,7 @@ class MovieStore: MovieService {
             }
             
             do{
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                let decodedData = try self.jsonDecoder.decode(T.self, from: data)
                 self.executeCompletionHandlerInMainThreat(with: .success(decodedData), completion: completion)
             } catch {
                 self.executeCompletionHandlerInMainThreat(with: .failure(.serializationError), completion: completion)

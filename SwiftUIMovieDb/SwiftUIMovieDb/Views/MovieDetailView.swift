@@ -31,10 +31,13 @@ struct MovieDetailView: View {
 
 struct MovieDetailListView: View {
     let movie: Movie
+    @State private var selectedTrailer: MovieVideo?
+    
+    private let imageLoader = ImageLoader()
     
     var body: some View {
         List{
-            MovieDetailImage(imageUrl: self.movie.backdropURL)
+            MovieDetailImage(imageLoader: imageLoader, imageUrl: self.movie.backdropURL)
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             HStack {
                 Text(movie.genreText)
@@ -103,7 +106,7 @@ struct MovieDetailListView: View {
                 
                 ForEach(movie.youtubeTrailers!) { trailer in
                     Button(action: {
-                        
+                        self.selectedTrailer = trailer
                     }) {
                         HStack{
                             Text(trailer.name)
@@ -115,19 +118,24 @@ struct MovieDetailListView: View {
                     
                 }
             }
+                
+        }
+        .sheet(item: self.$selectedTrailer) { trailer in
+            SafariView(url: trailer.youtubeURL!)
+            
         }
     }
 }
 
 struct MovieDetailImage: View {
     
-    @ObservedObject private var imageLoader = ImageLoader()
+    @ObservedObject var imageLoader: ImageLoader
     let imageUrl: URL
     
     var body: some View {
         ZStack{
             Rectangle().fill(Color.gray.opacity(0.3))
-            if self.imageLoader.image == nil{
+            if self.imageLoader.image != nil{
                 Image(uiImage: self.imageLoader.image!)
                     .resizable()
             }
