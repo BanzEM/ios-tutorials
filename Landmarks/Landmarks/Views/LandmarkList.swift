@@ -9,13 +9,22 @@ import SwiftUI
 
 struct LandmarkList: View {
     
+    var filteredLandmarks: [Landmark] {
+        modelData.landmarks.filter { landmark in
+                   (!modelData.showFavoritesOnly || landmark.isFavorite)
+               }
+    }
+    
+    
     @Environment(ModelData.self) private var modelData
     
     var body: some View {
         
         NavigationStack {
-            
-            List(modelData.landmarks) { landmark in
+            Toggle(isOn: Bindable(modelData).showFavoritesOnly) {
+                                Text("Favorites only")
+                            }
+            List(filteredLandmarks) { landmark in
                 NavigationLink {
                     LandmarkDetail(landmark: landmark)
                     

@@ -11,6 +11,7 @@ import Observation
 @Observable
 class ModelData{
     var landmarks: [Landmark] = load("landmarkData.json")
+    var showFavoritesOnly = false 
 }
 
 
