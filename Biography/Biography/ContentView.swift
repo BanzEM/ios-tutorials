@@ -7,24 +7,15 @@
 
 import SwiftUI
 
-extension UIApplication {
-    var keyWindowScene: UIWindowScene? {
-        connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .first { $0.activationState == .foregroundActive }
-    }
-}
-
-
-let screen = UIApplication.shared.keyWindowScene?.screen
 
 struct ContentView: View {
+    
     var body: some View {
         GeometryReader { proxy in
             ZStack {
                 Ellipse().fill(Color(red: 78/255, green: 88/255, blue: 81/255))
                     .rotationEffect(.degrees(90))
-                    .offset(y: -(screen?.bounds.width ?? 0 ) * 0.7)
+                    .offset(y: -proxy.size.height  * 0.5)
                     .edgesIgnoringSafeArea(.top)
                 
                 VStack(alignment: .leading, spacing: 24) {
